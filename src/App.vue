@@ -1,12 +1,32 @@
 <template>
-  <h1>hello world!</h1>
+  <Result :votes="votes" />
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+
+import Result from './components/Result.vue';
 
 export default defineComponent({
   name: 'App',
-  components: {},
+  components: {
+    Result,
+  },
+  setup() {
+    const votes = ref([
+      {
+        option: 'Sim',
+        count: 8,
+      },
+      {
+        option: 'Não',
+        count: 12,
+      },
+    ]);
+
+    return {
+      votes,
+    };
+  },
 });
 </script>
