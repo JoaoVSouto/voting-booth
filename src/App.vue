@@ -1,10 +1,5 @@
 <template>
-  <VotingCard
-    :state="votingState"
-    title="Segue o relator?"
-    :votes="votes"
-    @vote="handleVote"
-  />
+  <VotingCard title="Segue o relator?" :votes="votes" />
 </template>
 
 <script lang="ts">
@@ -28,27 +23,9 @@ export default defineComponent({
         count: 12,
       },
     ]);
-    const votingState = ref<'open' | 'closed'>('open');
-
-    function incrementCountOn(option: string) {
-      const vote = votes.value.find(vote => vote.option === option);
-
-      if (!vote) {
-        return;
-      }
-
-      vote.count += 1;
-    }
-
-    function handleVote(option: string) {
-      votingState.value = 'closed';
-      incrementCountOn(option);
-    }
 
     return {
       votes,
-      handleVote,
-      votingState,
     };
   },
 });

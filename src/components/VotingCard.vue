@@ -4,22 +4,24 @@
 
     <div class="flex justify-center">
       <Booth
-        v-if="state === 'open'"
+        v-if="votingState === 'open'"
         :options="options"
-        @vote="$emit('vote', $event)"
+        @vote="handleVote"
       />
-      <Result v-if="state === 'closed'" :votes="votes" />
+      <Result v-if="votingState === 'closed'" :votes="boothVotes" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import { computed, defineComponent, PropType, ref, watch } from 'vue';
 
 import { Vote } from '@/types/Vote';
 
 import Booth from './Booth.vue';
 import Result from './Result.vue';
+
+type VotingStates = 'open' | 'closed';
 
 export default defineComponent({
   name: 'VotingCard',
@@ -41,12 +43,35 @@ export default defineComponent({
       default: 'open',
     },
   },
-  emits: ['vote'],
   setup(props) {
-    const options = computed(() => props.votes.map(vote => vote.option));
+    const boothVotes = ref(props.votes);
+    const options = computed(() => boothVotes.value.map(vote => vote.option));
+    const votingState = ref<VotingStates>(props.state as VotingStates);
+
+    watch(props, () => {
+      votingState.value = props.state as VotingStates;
+    });
+
+    function incrementCountOn(option: string) {
+      const vote = boothVotes.value.find(vote => vote.option === option);
+
+      if (!vote) {
+        return;
+      }
+
+      vote.count += 1;
+    }
+
+    function handleVote(option: string) {
+      votingState.value = 'closed';
+      incrementCountOn(option);
+    }
 
     return {
+      votingState,
       options,
+      handleVote,
+      boothVotes,
     };
   },
 });
