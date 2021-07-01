@@ -38,3 +38,24 @@ FirstVoting.args = {
   state: 'open',
   title: 'Segue o relator?',
 };
+
+export const SecondVoting = Template.bind({});
+SecondVoting.storyName = 'Continuamos amanhã?';
+SecondVoting.args = {
+  votes: [
+    {
+      option: 'Sim',
+      count: 8,
+    },
+    {
+      option: 'Talvez',
+      count: 6,
+    },
+    {
+      option: 'Não',
+      count: 3,
+    },
+  ],
+  state: 'closed',
+  title: 'Continuamos amanhã?',
+};
