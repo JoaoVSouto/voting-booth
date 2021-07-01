@@ -1,5 +1,5 @@
 <template>
-  <Booth :options="options" @selected="handleOptionSelected" />
+  <Booth :options="options" @vote="handleVote" />
 </template>
 
 <script lang="ts">
@@ -25,14 +25,14 @@ export default defineComponent({
     ]);
     const options = computed(() => votes.value.map(vote => vote.option));
 
-    function handleOptionSelected(option: string) {
+    function handleVote(option: string) {
       console.log(option);
     }
 
     return {
       votes,
       options,
-      handleOptionSelected,
+      handleVote,
     };
   },
 });

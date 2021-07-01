@@ -12,7 +12,7 @@
       p-2
     "
     :class="index > 0 && 'ml-3'"
-    @click="$emit('selected', option)"
+    @click="$emit('vote', option)"
   >
     {{ option }}
   </button>
@@ -29,6 +29,6 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['selected'],
+  emits: ['vote'],
 });
 </script>
