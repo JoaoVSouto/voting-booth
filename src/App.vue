@@ -1,16 +1,21 @@
 <template>
-  <Booth :options="options" @vote="handleVote" />
+  <VotingCard
+    :state="votingState"
+    title="Segue o relator?"
+    :votes="votes"
+    @vote="handleVote"
+  />
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
-import Booth from './components/Booth.vue';
+import VotingCard from './components/VotingCard.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    Booth,
+    VotingCard,
   },
   setup() {
     const votes = ref([
@@ -23,16 +28,27 @@ export default defineComponent({
         count: 12,
       },
     ]);
-    const options = computed(() => votes.value.map(vote => vote.option));
+    const votingState = ref<'open' | 'closed'>('open');
+
+    function incrementCountOn(option: string) {
+      const vote = votes.value.find(vote => vote.option === option);
+
+      if (!vote) {
+        return;
+      }
+
+      vote.count += 1;
+    }
 
     function handleVote(option: string) {
-      console.log(option);
+      votingState.value = 'closed';
+      incrementCountOn(option);
     }
 
     return {
       votes,
-      options,
       handleVote,
+      votingState,
     };
   },
 });

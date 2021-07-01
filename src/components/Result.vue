@@ -1,5 +1,5 @@
 <template>
-  <ol class="list-decimal">
+  <ol class="list-decimal text-gray-200">
     <li v-for="vote in parsedVotes" :key="vote.option">
       {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)
     </li>
@@ -9,10 +9,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref } from 'vue';
 
-type Vote = {
-  option: string;
-  count: number;
-};
+import { Vote } from '@/types/Vote';
 
 export default defineComponent({
   name: 'Result',

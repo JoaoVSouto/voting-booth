@@ -13,7 +13,7 @@ const Template = args => ({
   setup() {
     return { args };
   },
-  template: '<Result v-bind="args" />',
+  template: '<Result v-bind="args" class="text-gray-900" />',
 });
 
 export const FirstVote = Template.bind({});
