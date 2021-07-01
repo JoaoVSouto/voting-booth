@@ -48,8 +48,14 @@ export default defineComponent({
     const options = computed(() => boothVotes.value.map(vote => vote.option));
     const votingState = ref<VotingStates>(props.state as VotingStates);
 
-    watch(props, () => {
-      votingState.value = props.state as VotingStates;
+    const previousPropsState = ref(JSON.parse(JSON.stringify(props)));
+
+    watch(props, (_, nextValue) => {
+      if (previousPropsState.value.state !== nextValue.state) {
+        votingState.value = props.state as VotingStates;
+      }
+
+      previousPropsState.value = JSON.parse(JSON.stringify(props));
     });
 
     function incrementCountOn(option: string) {
