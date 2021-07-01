@@ -1,7 +1,18 @@
+import Result from './components/Result';
+
 function App() {
-  return (
-    <h1>hello world!</h1>
-  );
+  const votes = [
+    {
+      option: 'Sim',
+      count: 16,
+    },
+    {
+      option: 'Não',
+      count: 12,
+    },
+  ];
+
+  return <Result votes={votes} />;
 }
 
 export default App;
