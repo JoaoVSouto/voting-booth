@@ -1,16 +1,16 @@
 <template>
-  <Result :votes="votes" />
+  <Booth :options="options" @selected="handleOptionSelected" />
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
-import Result from './components/Result.vue';
+import Booth from './components/Booth.vue';
 
 export default defineComponent({
   name: 'App',
   components: {
-    Result,
+    Booth,
   },
   setup() {
     const votes = ref([
@@ -23,9 +23,16 @@ export default defineComponent({
         count: 12,
       },
     ]);
+    const options = computed(() => votes.value.map(vote => vote.option));
+
+    function handleOptionSelected(option: string) {
+      console.log(option);
+    }
 
     return {
       votes,
+      options,
+      handleOptionSelected,
     };
   },
 });
