@@ -2,10 +2,10 @@ import cx from 'classnames';
 
 type BoothProps = {
   options: string[];
-  onVote: (option: string) => void;
+  onVote?: (option: string) => void;
 };
 
-export default function Booth({ options, onVote }: BoothProps) {
+export default function Booth({ options, onVote = () => {} }: BoothProps) {
   return (
     <>
       {options.map((option, index) => (
