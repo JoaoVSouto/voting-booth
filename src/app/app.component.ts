@@ -2,8 +2,17 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: '<h1>hello from the world!</h1>',
+  template: '<result [votes]="votes"></result>',
 })
 export class AppComponent {
-  title = 'voting-booth';
+  votes = [
+    {
+      option: 'Sim',
+      count: 8,
+    },
+    {
+      option: 'Não',
+      count: 12,
+    },
+  ];
 }
