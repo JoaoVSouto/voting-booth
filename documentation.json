@@ -388,17 +388,17 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/Result.stories.ts",
-                "type": "Story<ResultComponent>",
-                "defaultValue": "(args: ResultComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
+                "file": "src/stories/VotingCard.stories.ts",
+                "type": "Story<VotingCardComponent>",
+                "defaultValue": "(args: VotingCardComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [BoothComponent, ResultComponent],\n  },\n})"
             },
             {
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/VotingCard.stories.ts",
-                "type": "Story<VotingCardComponent>",
-                "defaultValue": "(args: VotingCardComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [BoothComponent, ResultComponent],\n  },\n})"
+                "file": "src/stories/Result.stories.ts",
+                "type": "Story<ResultComponent>",
+                "defaultValue": "(args: ResultComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
             }
         ],
         "functions": [],
