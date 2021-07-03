@@ -7,7 +7,7 @@
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-1d99fc6b6bcb05f3ceb8ebc350bfd6f8",
+            "id": "component-AppComponent-61fb37c927fb02cf31234415b8014ded",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -17,7 +17,7 @@
             "selector": "app-root",
             "styleUrls": [],
             "styles": [],
-            "template": "<result [votes]=\"votes\"></result>",
+            "template": "<booth [options]=\"options\" (vote)=\"onVote($event)\"></booth>",
             "templateUrl": [],
             "viewProviders": [],
             "inputsClass": [],
@@ -32,20 +32,96 @@
                     "line": 8
                 }
             ],
+            "methodsClass": [
+                {
+                    "name": "onVote",
+                    "args": [
+                        {
+                            "name": "option",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 23,
+                    "jsdoctags": [
+                        {
+                            "name": "option",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  template: '<booth [options]=\"options\" (vote)=\"onVote($event)\"></booth>',\n})\nexport class AppComponent {\n  votes = [\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ];\n\n  get options() {\n    return this.votes.map((vote) => vote.option);\n  }\n\n  onVote(option: string) {\n    console.log(option);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "accessors": {
+                "options": {
+                    "name": "options",
+                    "getSignature": {
+                        "name": "options",
+                        "type": "",
+                        "returnType": "",
+                        "line": 19
+                    }
+                }
+            }
+        },
+        {
+            "name": "BoothComponent",
+            "id": "component-BoothComponent-a2f054f4d42c49e591722fd5ea3a4290",
+            "file": "src/app/booth.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "booth",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<button\n  type=\"button\"\n  *ngFor=\"let option of options; index as i\"\n  [ngClass]=\"[\n    'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n    i > 0 ? 'ml-3' : ''\n  ]\"\n  (click)=\"vote.emit(option)\"\n>\n  {{ option }}\n</button>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "options",
+                    "line": 20,
+                    "type": "string[]"
+                }
+            ],
+            "outputsClass": [
+                {
+                    "name": "vote",
+                    "defaultValue": "new EventEmitter<string>()",
+                    "line": 22,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
             "methodsClass": [],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  template: '<result [votes]=\"votes\"></result>',\n})\nexport class AppComponent {\n  votes = [\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ];\n}\n",
+            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\n\n@Component({\n  selector: 'booth',\n  template: `\n    <button\n      type=\"button\"\n      *ngFor=\"let option of options; index as i\"\n      [ngClass]=\"[\n        'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n        i > 0 ? 'ml-3' : ''\n      ]\"\n      (click)=\"vote.emit(option)\"\n    >\n      {{ option }}\n    </button>\n  `,\n})\nexport class BoothComponent {\n  @Input() options!: string[];\n\n  @Output() vote = new EventEmitter<string>();\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": ""
         },
         {
-            "name": "ResultsComponent",
-            "id": "component-ResultsComponent-bf850d8767fa989886e16382e09c6e84",
+            "name": "ResultComponent",
+            "id": "component-ResultComponent-f87584b79267754dd098e943ddc3d7e1",
             "file": "src/app/result.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -78,7 +154,7 @@
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { Vote } from '../types/Vote';\n\n@Component({\n  selector: 'result',\n  template: `\n    <ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n      <li *ngFor=\"let vote of parsedVotes\">\n        {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n      </li>\n    </ol>\n  `,\n})\nexport class ResultsComponent {\n  @Input() votes!: Vote[];\n  @Input() className = '';\n\n  get parsedVotes() {\n    const totalVotes = this.votes.reduce(\n      (totalVotes, vote) => totalVotes + vote.count,\n      0\n    );\n    const orderedVotes = [...this.votes].sort((a, b) => b.count - a.count);\n    const parsedVotes = orderedVotes.map((vote) => ({\n      ...vote,\n      rate: Math.round((vote.count * 100) / totalVotes),\n    }));\n\n    return parsedVotes;\n  }\n}\n",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { Vote } from '../types/Vote';\n\n@Component({\n  selector: 'result',\n  template: `\n    <ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n      <li *ngFor=\"let vote of parsedVotes\">\n        {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n      </li>\n    </ol>\n  `,\n})\nexport class ResultComponent {\n  @Input() votes!: Vote[];\n  @Input() className = '';\n\n  get parsedVotes() {\n    const totalVotes = this.votes.reduce(\n      (totalVotes, vote) => totalVotes + vote.count,\n      0\n    );\n    const orderedVotes = [...this.votes].sort((a, b) => b.count - a.count);\n    const parsedVotes = orderedVotes.map((vote) => ({\n      ...vote,\n      rate: Math.round((vote.count * 100) / totalVotes),\n    }));\n\n    return parsedVotes;\n  }\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
@@ -110,7 +186,10 @@
                             "name": "AppComponent"
                         },
                         {
-                            "name": "ResultsComponent"
+                            "name": "BoothComponent"
+                        },
+                        {
+                            "name": "ResultComponent"
                         }
                     ]
                 },
@@ -199,8 +278,8 @@
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/Result.stories.ts",
-                "type": "Story<ResultsComponent>",
-                "defaultValue": "(args: ResultsComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
+                "type": "Story<ResultComponent>",
+                "defaultValue": "(args: ResultComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
             }
         ],
         "functions": [],
@@ -286,8 +365,8 @@
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/stories/Result.stories.ts",
-                    "type": "Story<ResultsComponent>",
-                    "defaultValue": "(args: ResultsComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
+                    "type": "Story<ResultComponent>",
+                    "defaultValue": "(args: ResultComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
                 }
             ]
         },
@@ -318,14 +397,23 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/booth.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "BoothComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
                 "filePath": "src/app/result.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "ResultsComponent",
+                "name": "ResultComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/3",
                 "status": "low"

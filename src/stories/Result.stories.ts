@@ -2,11 +2,11 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 
 import center from './decorators/center';
 
-import { ResultsComponent } from '../app/result.component';
+import { ResultComponent } from '../app/result.component';
 
 export default {
   title: 'Voting/Result',
-  component: ResultsComponent,
+  component: ResultComponent,
   decorators: [center],
   argTypes: {
     className: {
@@ -17,7 +17,7 @@ export default {
   },
 } as Meta;
 
-const Template: Story<ResultsComponent> = (args: ResultsComponent) => ({
+const Template: Story<ResultComponent> = (args: ResultComponent) => ({
   props: {
     ...args,
     className: 'text-gray-900',
