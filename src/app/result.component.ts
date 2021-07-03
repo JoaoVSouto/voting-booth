@@ -12,7 +12,7 @@ import { Vote } from '../types/Vote';
     </ol>
   `,
 })
-export class ResultsComponent {
+export class ResultComponent {
   @Input() votes!: Vote[];
   @Input() className = '';
 

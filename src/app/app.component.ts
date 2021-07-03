@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  template: '<result [votes]="votes"></result>',
+  template: '<booth [options]="options" (vote)="onVote($event)"></booth>',
 })
 export class AppComponent {
   votes = [
@@ -15,4 +15,12 @@ export class AppComponent {
       count: 12,
     },
   ];
+
+  get options() {
+    return this.votes.map((vote) => vote.option);
+  }
+
+  onVote(option: string) {
+    console.log(option);
+  }
 }
