@@ -25,6 +25,10 @@ export default function VotingCard({
     boothVotes,
   ]);
 
+  React.useEffect(() => {
+    setVotingState(state);
+  }, [state]);
+
   function incrementCountOn(option: string) {
     setBoothVotes(oldVotes =>
       oldVotes.map(vote => ({
