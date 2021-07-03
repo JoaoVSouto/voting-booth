@@ -1,4 +1,4 @@
-import Result from './components/Result';
+import Booth from './components/Booth';
 
 function App() {
   const votes = [
@@ -11,8 +11,13 @@ function App() {
       count: 12,
     },
   ];
+  const options = votes.map(vote => vote.option);
 
-  return <Result votes={votes} />;
+  function handleVote(option: string) {
+    console.log(option);
+  }
+
+  return <Booth options={options} onVote={handleVote} />;
 }
 
 export default App;
