@@ -5,7 +5,7 @@ import { Vote } from '../types/Vote';
 @Component({
   selector: 'result',
   template: `
-    <ol class="list-decimal text-gray-200">
+    <ol [ngClass]="['list-decimal text-gray-200', className]">
       <li *ngFor="let vote of parsedVotes">
         {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)
       </li>
@@ -14,6 +14,7 @@ import { Vote } from '../types/Vote';
 })
 export class ResultsComponent {
   @Input() votes!: Vote[];
+  @Input() className = '';
 
   get parsedVotes() {
     const totalVotes = this.votes.reduce(
