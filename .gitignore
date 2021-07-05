@@ -1,4 +1,4 @@
-.vercel
-node_modules
-storybook-static
-.env
+/node_modules/
+/public/build/
+
+.DS_Store
