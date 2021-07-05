@@ -14,7 +14,7 @@
     }));
 </script>
 
-<ol>
+<ol class="list-decimal text-gray-200">
   {#each parsedVotes as vote}
     <li>
       {vote.option} - {vote.count} votos ({vote.rate}%)
