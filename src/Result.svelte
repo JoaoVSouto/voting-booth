@@ -1,5 +1,6 @@
 <script>
   export let votes;
+  export let className = '';
 
   $: totalVotes = votes.reduce(
     (totalVotes, vote) => totalVotes + vote.count,
@@ -14,7 +15,7 @@
     }));
 </script>
 
-<ol class="list-decimal text-gray-200">
+<ol class={`list-decimal text-gray-200 ${className}`}>
   {#each parsedVotes as vote}
     <li>
       {vote.option} - {vote.count} votos ({vote.rate}%)

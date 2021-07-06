@@ -1,11 +1,6 @@
-const production = !process.env.ROLLUP_WATCH;
-
 module.exports = {
-  purge: {
-    content: ['./src/**/*.svelte'],
-    enabled: production,
-  },
-  darkMode: false,
+  purge: ["./src/**/*.svelte", "./public/*.html"],
+  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
   },
@@ -13,8 +8,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
 };

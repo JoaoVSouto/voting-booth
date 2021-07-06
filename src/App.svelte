@@ -1,4 +1,6 @@
 <script>
+  import './main.css';
+
   import Result from './Result.svelte';
 
   let votes = [
@@ -16,9 +18,3 @@
 <main>
   <Result {votes} />
 </main>
-
-<style global lang="postcss">
-  @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-</style>
