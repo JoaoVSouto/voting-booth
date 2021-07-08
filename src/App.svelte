@@ -1,7 +1,7 @@
 <script>
   import './main.css';
 
-  import Booth from './Booth.svelte';
+  import VotingCard from './VotingCard.svelte';
 
   let votes = [
     {
@@ -13,14 +13,8 @@
       count: 12,
     },
   ];
-
-  $: options = votes.map(vote => vote.option);
-
-  function handleVote(option) {
-    console.log(option);
-  }
 </script>
 
 <main>
-  <Booth {options} onVote={handleVote} />
+  <VotingCard title="Segue o relator?" {votes} />
 </main>
