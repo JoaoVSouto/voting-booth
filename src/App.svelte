@@ -1,7 +1,7 @@
 <script>
   import './main.css';
 
-  import Result from './Result.svelte';
+  import Booth from './Booth.svelte';
 
   let votes = [
     {
@@ -13,8 +13,14 @@
       count: 12,
     },
   ];
+
+  $: options = votes.map(vote => vote.option);
+
+  function handleVote(option) {
+    console.log(option);
+  }
 </script>
 
 <main>
-  <Result {votes} />
+  <Booth {options} onVote={handleVote} />
 </main>
