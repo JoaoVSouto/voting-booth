@@ -7,26 +7,21 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from 'vue';
+import { computed, defineComponent } from 'vue';
 
-import { Vote } from '@/types/Vote';
+import useVoting from '../store/voting';
 
 export default defineComponent({
   name: 'Result',
-  props: {
-    votes: {
-      type: Array as PropType<Vote[]>,
-      required: true,
-    },
-  },
-  setup(props) {
-    const votes = ref(props.votes);
+  setup() {
+    const voting = useVoting();
+
     const totalVotes = computed(() =>
-      votes.value.reduce((totalVotes, vote) => totalVotes + vote.count, 0)
+      voting.votes.reduce((totalVotes, vote) => totalVotes + vote.count, 0)
     );
 
     const orderedVotes = computed(() =>
-      [...votes.value].sort((a, b) => b.count - a.count)
+      [...voting.votes].sort((a, b) => b.count - a.count)
     );
     const parsedVotes = computed(() =>
       orderedVotes.value.map(vote => ({

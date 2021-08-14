@@ -19,16 +19,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
+
+import useVoting from '../store/voting';
 
 export default defineComponent({
   name: 'Booth',
-  props: {
-    options: {
-      type: Array as PropType<string[]>,
-      required: true,
-    },
-  },
   emits: ['vote'],
+  setup() {
+    const voting = useVoting();
+
+    const options = computed(() => voting.votes.map(vote => vote.option));
+
+    return {
+      options,
+    };
+  },
 });
 </script>

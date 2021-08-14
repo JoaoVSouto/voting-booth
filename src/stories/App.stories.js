@@ -1,20 +1,20 @@
 import center from './decorators/center';
 
-import Booth from '../components/Booth.vue';
+import App from '../App.vue';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/App',
+  component: App,
   decorators: [center],
 };
 
 const Template = args => ({
-  components: { Booth },
+  components: { App },
   setup() {
     return { args };
   },
-  template: '<Booth v-bind="args" />',
+  template: '<App v-bind="args" />',
 });
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Fluxo completo';

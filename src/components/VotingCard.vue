@@ -3,20 +3,16 @@
     <h1 class="font-bold text-2xl mb-4 text-gray-100">{{ title }}</h1>
 
     <div class="flex justify-center">
-      <Booth
-        v-if="votingState === 'open'"
-        :options="options"
-        @vote="handleVote"
-      />
-      <Result v-if="votingState === 'closed'" :votes="boothVotes" />
+      <Booth v-if="votingState === 'open'" @vote="handleVote" />
+      <Result v-if="votingState === 'closed'" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 
-import { Vote } from '@/types/Vote';
+import useVoting, { incrementCountOn } from '../store/voting';
 
 import Booth from './Booth.vue';
 import Result from './Result.vue';
@@ -30,22 +26,14 @@ export default defineComponent({
     Result,
   },
   props: {
-    votes: {
-      type: Array as PropType<Vote[]>,
-      required: true,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
     state: {
       type: String,
       default: 'open',
     },
   },
   setup(props) {
-    const boothVotes = ref(props.votes);
-    const options = computed(() => boothVotes.value.map(vote => vote.option));
+    const voting = useVoting();
+
     const votingState = ref<VotingStates>(props.state as VotingStates);
 
     const previousPropsState = ref(JSON.parse(JSON.stringify(props)));
@@ -58,26 +46,15 @@ export default defineComponent({
       previousPropsState.value = JSON.parse(JSON.stringify(props));
     });
 
-    function incrementCountOn(option: string) {
-      const vote = boothVotes.value.find(vote => vote.option === option);
-
-      if (!vote) {
-        return;
-      }
-
-      vote.count += 1;
-    }
-
     function handleVote(option: string) {
       votingState.value = 'closed';
       incrementCountOn(option);
     }
 
     return {
+      title: voting.title,
       votingState,
-      options,
       handleVote,
-      boothVotes,
     };
   },
 });

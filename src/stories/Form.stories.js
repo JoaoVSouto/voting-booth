@@ -1,20 +1,20 @@
 import center from './decorators/center';
 
-import Booth from '../components/Booth.vue';
+import Form from '../components/Form.vue';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/Form',
+  component: Form,
   decorators: [center],
 };
 
 const Template = args => ({
-  components: { Booth },
+  components: { Form },
   setup() {
     return { args };
   },
-  template: '<Booth v-bind="args" />',
+  template: '<Form v-bind="args" />',
 });
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Formulário';
