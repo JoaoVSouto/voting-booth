@@ -1,18 +1,12 @@
+import { useVoting } from 'hooks/useVoting';
+
 import VotingCard from './components/VotingCard';
+import Form from './components/Form';
 
 function App() {
-  const votes = [
-    {
-      option: 'Sim',
-      count: 8,
-    },
-    {
-      option: 'Não',
-      count: 12,
-    },
-  ];
+  const { isEditing: shouldFormAppear } = useVoting();
 
-  return <VotingCard title="Segue o relator?" votes={votes} />;
+  return shouldFormAppear ? <Form /> : <VotingCard />;
 }
 
 export default App;

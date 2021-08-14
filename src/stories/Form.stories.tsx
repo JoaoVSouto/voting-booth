@@ -3,15 +3,15 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import center from './decorators/center';
 import withVotingProvider from './decorators/withVotingProvider';
 
-import Booth from '../components/Booth';
+import Form from '../components/Form';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/Form',
+  component: Form,
   decorators: [center, withVotingProvider],
-} as ComponentMeta<typeof Booth>;
+} as ComponentMeta<typeof Form>;
 
-const Template: ComponentStory<typeof Booth> = args => <Booth {...args} />;
+const Template: ComponentStory<typeof Form> = () => <Form />;
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Formulário';

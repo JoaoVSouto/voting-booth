@@ -1,11 +1,12 @@
-import { Vote } from 'types/Vote';
+import { useVoting } from 'hooks/useVoting';
 
 type ResultProps = {
-  votes: Vote[];
   className?: string;
 };
 
-export default function Result({ votes, className = '' }: ResultProps) {
+export default function Result({ className = '' }: ResultProps) {
+  const { votes } = useVoting();
+
   const totalVotes = votes.reduce(
     (totalVotes, vote) => totalVotes + vote.count,
     0

@@ -3,15 +3,15 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import center from './decorators/center';
 import withVotingProvider from './decorators/withVotingProvider';
 
-import Booth from '../components/Booth';
+import App from '../App';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/App',
+  component: App,
   decorators: [center, withVotingProvider],
-} as ComponentMeta<typeof Booth>;
+} as ComponentMeta<typeof App>;
 
-const Template: ComponentStory<typeof Booth> = args => <Booth {...args} />;
+const Template: ComponentStory<typeof App> = () => <App />;
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Fluxo completo';

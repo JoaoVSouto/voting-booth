@@ -1,11 +1,16 @@
 import cx from 'classnames';
 
+import { useVoting } from 'hooks/useVoting';
+
 type BoothProps = {
-  options: string[];
   onVote?: (option: string) => void;
 };
 
-export default function Booth({ options, onVote = () => {} }: BoothProps) {
+export default function Booth({ onVote = () => {} }: BoothProps) {
+  const { votes } = useVoting();
+
+  const options = votes.map(vote => vote.option);
+
   return (
     <>
       {options.map((option, index) => (

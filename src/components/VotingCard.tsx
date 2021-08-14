@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Vote } from 'types/Vote';
+import { useVoting } from 'hooks/useVoting';
 
 import Booth from './Booth';
 import Result from './Result';
@@ -8,35 +8,17 @@ import Result from './Result';
 type VotingStates = 'open' | 'closed';
 
 type VotingCardProps = {
-  votes: Vote[];
-  title: string;
   state?: VotingStates;
 };
 
-export default function VotingCard({
-  title,
-  votes,
-  state = 'open',
-}: VotingCardProps) {
-  const [boothVotes, setBoothVotes] = React.useState(votes);
-  const [votingState, setVotingState] = React.useState(state);
+export default function VotingCard({ state = 'open' }: VotingCardProps) {
+  const { incrementCountOn, title } = useVoting();
 
-  const options = React.useMemo(() => boothVotes.map(vote => vote.option), [
-    boothVotes,
-  ]);
+  const [votingState, setVotingState] = React.useState(state);
 
   React.useEffect(() => {
     setVotingState(state);
   }, [state]);
-
-  function incrementCountOn(option: string) {
-    setBoothVotes(oldVotes =>
-      oldVotes.map(vote => ({
-        ...vote,
-        count: vote.option === option ? vote.count + 1 : vote.count,
-      }))
-    );
-  }
 
   function handleVote(option: string) {
     setVotingState('closed');
@@ -48,10 +30,8 @@ export default function VotingCard({
       <h1 className="font-bold text-2xl mb-4 text-gray-100">{title}</h1>
 
       <div className="flex justify-center">
-        {votingState === 'open' && (
-          <Booth options={options} onVote={handleVote} />
-        )}
-        {votingState === 'closed' && <Result votes={boothVotes} />}
+        {votingState === 'open' && <Booth onVote={handleVote} />}
+        {votingState === 'closed' && <Result />}
       </div>
     </div>
   );
