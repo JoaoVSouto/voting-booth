@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
 
+import { VotingService } from './voting.service';
+
 @Component({
   selector: 'app-root',
-  template:
-    '<voting-card title="Segue o relator?" [votes]="votes"></voting-card>',
+  template: `
+    <ng-template [ngIf]="votingService.isEditing" [ngIfElse]="votingCard">
+      <booth-form></booth-form>
+    </ng-template>
+    <ng-template #votingCard>
+      <voting-card></voting-card>
+    </ng-template>
+  `,
 })
 export class AppComponent {
-  votes = [
-    {
-      option: 'Sim',
-      count: 8,
-    },
-    {
-      option: 'Não',
-      count: 12,
-    },
-  ];
+  constructor(public votingService: VotingService) {}
 }

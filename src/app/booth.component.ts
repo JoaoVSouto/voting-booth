@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { VotingService } from './voting.service';
 
 @Component({
   selector: 'booth',
@@ -17,7 +19,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class BoothComponent {
-  @Input() options!: string[];
-
   @Output() vote = new EventEmitter<string>();
+
+  constructor(private votingService: VotingService) {}
+
+  get options() {
+    return this.votingService.votes.map((vote) => vote.option);
+  }
 }

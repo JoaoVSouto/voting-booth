@@ -1,199 +1,38 @@
 {
     "pipes": [],
     "interfaces": [],
-    "injectables": [],
-    "classes": [],
-    "directives": [],
-    "components": [
+    "injectables": [
         {
-            "name": "AppComponent",
-            "id": "component-AppComponent-9cd1abe86c9f3b2db2cf3e7518b80442",
-            "file": "src/app/app.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-root",
-            "styleUrls": [],
-            "styles": [],
-            "template": "<voting-card title=\"Segue o relator?\" [votes]=\"votes\"></voting-card>",
-            "templateUrl": [],
-            "viewProviders": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [
+            "name": "VotingService",
+            "id": "injectable-VotingService-351c589b0822343b4df2f0ac35d68725",
+            "file": "src/app/voting.service.ts",
+            "properties": [
                 {
-                    "name": "votes",
-                    "defaultValue": "[\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ]",
-                    "type": "[]",
+                    "name": "isEditing",
+                    "defaultValue": "true",
+                    "type": "",
                     "optional": false,
                     "description": "",
-                    "line": 9
-                }
-            ],
-            "methodsClass": [],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  template:\n    '<voting-card title=\"Segue o relator?\" [votes]=\"votes\"></voting-card>',\n})\nexport class AppComponent {\n  votes = [\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ];\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": ""
-        },
-        {
-            "name": "BoothComponent",
-            "id": "component-BoothComponent-a2f054f4d42c49e591722fd5ea3a4290",
-            "file": "src/app/booth.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "booth",
-            "styleUrls": [],
-            "styles": [],
-            "template": "<button\n  type=\"button\"\n  *ngFor=\"let option of options; index as i\"\n  [ngClass]=\"[\n    'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n    i > 0 ? 'ml-3' : ''\n  ]\"\n  (click)=\"vote.emit(option)\"\n>\n  {{ option }}\n</button>\n",
-            "templateUrl": [],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "options",
-                    "line": 20,
-                    "type": "string[]"
-                }
-            ],
-            "outputsClass": [
-                {
-                    "name": "vote",
-                    "defaultValue": "new EventEmitter<string>()",
-                    "line": 22,
-                    "type": "EventEmitter"
-                }
-            ],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, EventEmitter, Input, Output } from '@angular/core';\n\n@Component({\n  selector: 'booth',\n  template: `\n    <button\n      type=\"button\"\n      *ngFor=\"let option of options; index as i\"\n      [ngClass]=\"[\n        'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n        i > 0 ? 'ml-3' : ''\n      ]\"\n      (click)=\"vote.emit(option)\"\n    >\n      {{ option }}\n    </button>\n  `,\n})\nexport class BoothComponent {\n  @Input() options!: string[];\n\n  @Output() vote = new EventEmitter<string>();\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": ""
-        },
-        {
-            "name": "ResultComponent",
-            "id": "component-ResultComponent-f87584b79267754dd098e943ddc3d7e1",
-            "file": "src/app/result.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "result",
-            "styleUrls": [],
-            "styles": [],
-            "template": "<ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n  <li *ngFor=\"let vote of parsedVotes\">\n    {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n  </li>\n</ol>\n",
-            "templateUrl": [],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "className",
-                    "defaultValue": "''",
-                    "line": 17
-                },
-                {
-                    "name": "votes",
-                    "line": 16,
-                    "type": "Vote[]"
-                }
-            ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "hostBindings": [],
-            "hostListeners": [],
-            "description": "",
-            "rawdescription": "",
-            "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { Vote } from '../types/Vote';\n\n@Component({\n  selector: 'result',\n  template: `\n    <ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n      <li *ngFor=\"let vote of parsedVotes\">\n        {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n      </li>\n    </ol>\n  `,\n})\nexport class ResultComponent {\n  @Input() votes!: Vote[];\n  @Input() className = '';\n\n  get parsedVotes() {\n    const totalVotes = this.votes.reduce(\n      (totalVotes, vote) => totalVotes + vote.count,\n      0\n    );\n    const orderedVotes = [...this.votes].sort((a, b) => b.count - a.count);\n    const parsedVotes = orderedVotes.map((vote) => ({\n      ...vote,\n      rate: Math.round((vote.count * 100) / totalVotes),\n    }));\n\n    return parsedVotes;\n  }\n}\n",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "accessors": {
-                "parsedVotes": {
-                    "name": "parsedVotes",
-                    "getSignature": {
-                        "name": "parsedVotes",
-                        "type": "",
-                        "returnType": "",
-                        "line": 19
-                    }
-                }
-            }
-        },
-        {
-            "name": "VotingCardComponent",
-            "id": "component-VotingCardComponent-c450b11dce61fd692b1dcf6c066901a6",
-            "file": "src/app/votingCard.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "voting-card",
-            "styleUrls": [],
-            "styles": [],
-            "template": "<div class=\"bg-gray-600 max-w-max p-6 flex flex-col rounded\">\n  <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">{{ title }}</h1>\n\n  <div class=\"flex justify-center\">\n    <booth\n      *ngIf=\"state === 'open'\"\n      [options]=\"options\"\n      (vote)=\"handleVote($event)\"\n    ></booth>\n    <result *ngIf=\"state === 'closed'\" [votes]=\"votes\"></result>\n  </div>\n</div>\n",
-            "templateUrl": [],
-            "viewProviders": [],
-            "inputsClass": [
-                {
-                    "name": "state",
-                    "defaultValue": "'open'",
-                    "line": 27,
-                    "type": "VotingStates"
+                    "line": 25
                 },
                 {
                     "name": "title",
-                    "line": 26,
-                    "type": "string"
+                    "defaultValue": "'Segue o relator?'",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 14
                 },
                 {
                     "name": "votes",
-                    "line": 25,
-                    "type": "Vote[]"
+                    "defaultValue": "[\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ]",
+                    "type": "Vote[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 15
                 }
             ],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [
-                {
-                    "name": "handleVote",
-                    "args": [
-                        {
-                            "name": "option",
-                            "type": "string"
-                        }
-                    ],
-                    "optional": false,
-                    "returnType": "void",
-                    "typeParameters": [],
-                    "line": 40,
-                    "jsdoctags": [
-                        {
-                            "name": "option",
-                            "type": "string",
-                            "tagName": {
-                                "text": "param"
-                            }
-                        }
-                    ]
-                },
+            "methods": [
                 {
                     "name": "incrementCountOn",
                     "args": [
@@ -215,17 +54,151 @@
                             }
                         }
                     ]
+                },
+                {
+                    "name": "setVotingData",
+                    "args": [
+                        {
+                            "type": "VotingDataPayload"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 27,
+                    "jsdoctags": [
+                        {
+                            "type": "VotingDataPayload",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
                 }
             ],
+            "description": "",
+            "sourceCode": "import { Injectable } from '@angular/core';\n\nimport { Vote } from '../types/Vote';\n\ntype VotingDataPayload = {\n  title: string;\n  votes: Vote[];\n};\n\n@Injectable({\n  providedIn: 'root',\n})\nexport class VotingService {\n  title = 'Segue o relator?';\n  votes: Vote[] = [\n    {\n      option: 'Sim',\n      count: 8,\n    },\n    {\n      option: 'Não',\n      count: 12,\n    },\n  ];\n  isEditing = true;\n\n  setVotingData({ title, votes }: VotingDataPayload) {\n    this.title = title;\n    this.votes = votes;\n    this.isEditing = false;\n  }\n\n  incrementCountOn(option: string) {\n    this.votes = this.votes.map((vote) => ({\n      ...vote,\n      count: vote.option === option ? vote.count + 1 : vote.count,\n    }));\n  }\n}\n",
+            "type": "injectable"
+        }
+    ],
+    "classes": [],
+    "directives": [],
+    "components": [
+        {
+            "name": "AppComponent",
+            "id": "component-AppComponent-827102193a3d6ec31fb59412e9eccb44",
+            "file": "src/app/app.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-root",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<ng-template [ngIf]=\"votingService.isEditing\" [ngIfElse]=\"votingCard\">\n  <booth-form></booth-form>\n</ng-template>\n<ng-template #votingCard>\n  <voting-card></voting-card>\n</ng-template>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "votingService",
+                    "type": "VotingService",
+                    "optional": false,
+                    "description": "",
+                    "line": 17,
+                    "modifierKind": [
+                        114
+                    ]
+                }
+            ],
+            "methodsClass": [],
             "hostBindings": [],
             "hostListeners": [],
             "description": "",
             "rawdescription": "",
             "type": "component",
-            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { Vote } from '../types/Vote';\n\ntype VotingStates = 'open' | 'closed';\n\n@Component({\n  selector: 'voting-card',\n  template: `\n    <div class=\"bg-gray-600 max-w-max p-6 flex flex-col rounded\">\n      <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">{{ title }}</h1>\n\n      <div class=\"flex justify-center\">\n        <booth\n          *ngIf=\"state === 'open'\"\n          [options]=\"options\"\n          (vote)=\"handleVote($event)\"\n        ></booth>\n        <result *ngIf=\"state === 'closed'\" [votes]=\"votes\"></result>\n      </div>\n    </div>\n  `,\n})\nexport class VotingCardComponent {\n  @Input() votes!: Vote[];\n  @Input() title!: string;\n  @Input() state: VotingStates = 'open';\n\n  get options() {\n    return this.votes.map((vote) => vote.option);\n  }\n\n  incrementCountOn(option: string) {\n    this.votes = this.votes.map((vote) => ({\n      ...vote,\n      count: vote.option === option ? vote.count + 1 : vote.count,\n    }));\n  }\n\n  handleVote(option: string) {\n    this.state = 'closed';\n    this.incrementCountOn(option);\n  }\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n\nimport { VotingService } from './voting.service';\n\n@Component({\n  selector: 'app-root',\n  template: `\n    <ng-template [ngIf]=\"votingService.isEditing\" [ngIfElse]=\"votingCard\">\n      <booth-form></booth-form>\n    </ng-template>\n    <ng-template #votingCard>\n      <voting-card></voting-card>\n    </ng-template>\n  `,\n})\nexport class AppComponent {\n  constructor(public votingService: VotingService) {}\n}\n",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService"
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "BoothComponent",
+            "id": "component-BoothComponent-400027af6cff27c1ff3b45ca7aba22d9",
+            "file": "src/app/booth.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "booth",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<button\n  type=\"button\"\n  *ngFor=\"let option of options; index as i\"\n  [ngClass]=\"[\n    'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n    i > 0 ? 'ml-3' : ''\n  ]\"\n  (click)=\"vote.emit(option)\"\n>\n  {{ option }}\n</button>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [
+                {
+                    "name": "vote",
+                    "defaultValue": "new EventEmitter<string>()",
+                    "line": 22,
+                    "type": "EventEmitter"
+                }
+            ],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, EventEmitter, Output } from '@angular/core';\n\nimport { VotingService } from './voting.service';\n\n@Component({\n  selector: 'booth',\n  template: `\n    <button\n      type=\"button\"\n      *ngFor=\"let option of options; index as i\"\n      [ngClass]=\"[\n        'transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded p-2',\n        i > 0 ? 'ml-3' : ''\n      ]\"\n      (click)=\"vote.emit(option)\"\n    >\n      {{ option }}\n    </button>\n  `,\n})\nexport class BoothComponent {\n  @Output() vote = new EventEmitter<string>();\n\n  constructor(private votingService: VotingService) {}\n\n  get options() {\n    return this.votingService.votes.map((vote) => vote.option);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService"
+                    }
+                ],
+                "line": 22,
+                "jsdoctags": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
             "accessors": {
                 "options": {
                     "name": "options",
@@ -233,9 +206,326 @@
                         "name": "options",
                         "type": "",
                         "returnType": "",
-                        "line": 29
+                        "line": 26
                     }
                 }
+            }
+        },
+        {
+            "name": "FormComponent",
+            "id": "component-FormComponent-ffcb128438c584f12982b23540bf7a52",
+            "file": "src/app/form.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "booth-form",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<form\n  class=\"bg-gray-600 flex flex-col max-w-max rounded p-6\"\n  (ngSubmit)=\"handleBoothConfiguration()\"\n>\n  <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">\n    Configuração da cabine de votação\n  </h1>\n\n  <label for=\"title\" class=\"text-gray-100 mb-1\">Título</label>\n  <input\n    id=\"title\"\n    type=\"text\"\n    class=\"rounded px-2 py-1\"\n    name=\"title\"\n    [(ngModel)]=\"title\"\n  />\n  <span *ngIf=\"titleError\" class=\"text-red-400\">{{ titleError }}</span>\n\n  <label class=\"text-gray-100 mt-3 mb-1\">Opções</label>\n  <input\n    type=\"text\"\n    class=\"rounded px-2 py-1 flex-1\"\n    placeholder=\"Opção 1\"\n    name=\"opcao_1\"\n    [(ngModel)]=\"options[0]\"\n  />\n  <span *ngIf=\"firstOptionErrorInformation.hasError\" class=\"text-red-400\">{{\n    firstOptionErrorInformation.message\n  }}</span>\n  <input\n    type=\"text\"\n    class=\"rounded px-2 py-1 flex-1 mt-2\"\n    placeholder=\"Opção 2\"\n    name=\"opcao_2\"\n    [(ngModel)]=\"options[1]\"\n  />\n  <span\n    *ngIf=\"secondOptionErrorInformation.hasError\"\n    class=\"text-red-400\"\n    >{{ secondOptionErrorInformation.message }}</span\n  >\n\n  <input\n    *ngFor=\"let option of dynamicOptions; index as i; trackBy: trackByFn\"\n    type=\"text\"\n    class=\"rounded px-2 py-1 flex-1 mt-2\"\n    [placeholder]=\"'Opção ' + (i + 3)\"\n    [name]=\"'opcao_' + (i + 3)\"\n    [(ngModel)]=\"options[i + 2]\"\n  />\n\n  <div class=\"flex justify-end mt-2\">\n    <button\n      type=\"button\"\n      class=\"transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded py-1 px-2\"\n      (click)=\"handleAddNewOption()\"\n    >\n      Add+\n    </button>\n  </div>\n\n  <hr class=\"mt-3\" />\n\n  <button\n    type=\"submit\"\n    class=\"mt-3 transition-all bg-green-600 hover:bg-green-700 text-white rounded py-1 px-2\"\n  >\n    Salvar\n  </button>\n</form>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "options",
+                    "defaultValue": "['', '']",
+                    "type": "[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 88
+                },
+                {
+                    "name": "optionsErrors",
+                    "defaultValue": "[]",
+                    "type": "OptionError[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 89
+                },
+                {
+                    "name": "title",
+                    "defaultValue": "''",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 86
+                },
+                {
+                    "name": "titleError",
+                    "defaultValue": "''",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 87
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "handleAddNewOption",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 156
+                },
+                {
+                    "name": "handleBoothConfiguration",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 142
+                },
+                {
+                    "name": "trackByFn",
+                    "args": [
+                        {
+                            "name": "index",
+                            "type": "number"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "number",
+                    "typeParameters": [],
+                    "line": 160,
+                    "jsdoctags": [
+                        {
+                            "name": "index",
+                            "type": "number",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "validateFields",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "boolean",
+                    "typeParameters": [],
+                    "line": 119,
+                    "modifierKind": [
+                        112
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\nimport { VotingService } from './voting.service';\n\ntype OptionError = {\n  index: number;\n  error: string;\n};\n\n@Component({\n  selector: 'booth-form',\n  template: `\n    <form\n      class=\"bg-gray-600 flex flex-col max-w-max rounded p-6\"\n      (ngSubmit)=\"handleBoothConfiguration()\"\n    >\n      <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">\n        Configuração da cabine de votação\n      </h1>\n\n      <label for=\"title\" class=\"text-gray-100 mb-1\">Título</label>\n      <input\n        id=\"title\"\n        type=\"text\"\n        class=\"rounded px-2 py-1\"\n        name=\"title\"\n        [(ngModel)]=\"title\"\n      />\n      <span *ngIf=\"titleError\" class=\"text-red-400\">{{ titleError }}</span>\n\n      <label class=\"text-gray-100 mt-3 mb-1\">Opções</label>\n      <input\n        type=\"text\"\n        class=\"rounded px-2 py-1 flex-1\"\n        placeholder=\"Opção 1\"\n        name=\"opcao_1\"\n        [(ngModel)]=\"options[0]\"\n      />\n      <span *ngIf=\"firstOptionErrorInformation.hasError\" class=\"text-red-400\">{{\n        firstOptionErrorInformation.message\n      }}</span>\n      <input\n        type=\"text\"\n        class=\"rounded px-2 py-1 flex-1 mt-2\"\n        placeholder=\"Opção 2\"\n        name=\"opcao_2\"\n        [(ngModel)]=\"options[1]\"\n      />\n      <span\n        *ngIf=\"secondOptionErrorInformation.hasError\"\n        class=\"text-red-400\"\n        >{{ secondOptionErrorInformation.message }}</span\n      >\n\n      <input\n        *ngFor=\"let option of dynamicOptions; index as i; trackBy: trackByFn\"\n        type=\"text\"\n        class=\"rounded px-2 py-1 flex-1 mt-2\"\n        [placeholder]=\"'Opção ' + (i + 3)\"\n        [name]=\"'opcao_' + (i + 3)\"\n        [(ngModel)]=\"options[i + 2]\"\n      />\n\n      <div class=\"flex justify-end mt-2\">\n        <button\n          type=\"button\"\n          class=\"transition-all bg-gray-800 hover:bg-gray-900 text-gray-200 rounded py-1 px-2\"\n          (click)=\"handleAddNewOption()\"\n        >\n          Add+\n        </button>\n      </div>\n\n      <hr class=\"mt-3\" />\n\n      <button\n        type=\"submit\"\n        class=\"mt-3 transition-all bg-green-600 hover:bg-green-700 text-white rounded py-1 px-2\"\n      >\n        Salvar\n      </button>\n    </form>\n  `,\n})\nexport class FormComponent {\n  title = '';\n  titleError = '';\n  options = ['', ''];\n  optionsErrors: OptionError[] = [];\n\n  constructor(private votingService: VotingService) {}\n\n  get dynamicOptions() {\n    return this.options.slice(2);\n  }\n\n  get firstOptionErrorInformation() {\n    const errorInformation = this.optionsErrors.find(\n      (option) => option.index === 0\n    );\n\n    return {\n      hasError: Boolean(errorInformation),\n      message: errorInformation?.error,\n    };\n  }\n\n  get secondOptionErrorInformation() {\n    const errorInformation = this.optionsErrors.find(\n      (option) => option.index === 1\n    );\n\n    return {\n      hasError: Boolean(errorInformation),\n      message: errorInformation?.error,\n    };\n  }\n\n  private validateFields() {\n    let hasError = false;\n    this.titleError = '';\n    this.optionsErrors = [];\n\n    if (!this.title.trim()) {\n      hasError = true;\n      this.titleError = 'Campo obrigatório';\n    } else if (this.title.trim().length < 4) {\n      hasError = true;\n      this.titleError = 'É necessário ao menos 4 caracteres';\n    }\n\n    this.options.slice(0, 2).forEach((option, index) => {\n      if (!option.trim()) {\n        hasError = true;\n        this.optionsErrors.push({ index, error: 'Campo obrigatório' });\n      }\n    });\n\n    return hasError;\n  }\n\n  handleBoothConfiguration() {\n    if (this.validateFields()) {\n      return;\n    }\n\n    this.votingService.setVotingData({\n      title: this.title,\n      votes: this.options.filter(Boolean).map((option) => ({\n        option,\n        count: 0,\n      })),\n    });\n  }\n\n  handleAddNewOption() {\n    this.options.push('');\n  }\n\n  trackByFn(index: number) {\n    return index;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService"
+                    }
+                ],
+                "line": 89,
+                "jsdoctags": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "accessors": {
+                "dynamicOptions": {
+                    "name": "dynamicOptions",
+                    "getSignature": {
+                        "name": "dynamicOptions",
+                        "type": "",
+                        "returnType": "",
+                        "line": 93
+                    }
+                },
+                "firstOptionErrorInformation": {
+                    "name": "firstOptionErrorInformation",
+                    "getSignature": {
+                        "name": "firstOptionErrorInformation",
+                        "type": "",
+                        "returnType": "",
+                        "line": 97
+                    }
+                },
+                "secondOptionErrorInformation": {
+                    "name": "secondOptionErrorInformation",
+                    "getSignature": {
+                        "name": "secondOptionErrorInformation",
+                        "type": "",
+                        "returnType": "",
+                        "line": 108
+                    }
+                }
+            }
+        },
+        {
+            "name": "ResultComponent",
+            "id": "component-ResultComponent-117de6cf04e112fb1b47484f4119ff24",
+            "file": "src/app/result.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "result",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n  <li *ngFor=\"let vote of parsedVotes\">\n    {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n  </li>\n</ol>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "className",
+                    "defaultValue": "''",
+                    "line": 16
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { VotingService } from './voting.service';\n\n@Component({\n  selector: 'result',\n  template: `\n    <ol [ngClass]=\"['list-decimal text-gray-200', className]\">\n      <li *ngFor=\"let vote of parsedVotes\">\n        {{ vote.option }} - {{ vote.count }} votos ({{ vote.rate }}%)\n      </li>\n    </ol>\n  `,\n})\nexport class ResultComponent {\n  @Input() className = '';\n\n  constructor(private votingService: VotingService) {}\n\n  get parsedVotes() {\n    const totalVotes = this.votingService.votes.reduce(\n      (totalVotes, vote) => totalVotes + vote.count,\n      0\n    );\n    const orderedVotes = [...this.votingService.votes].sort(\n      (a, b) => b.count - a.count\n    );\n    const parsedVotes = orderedVotes.map((vote) => ({\n      ...vote,\n      rate: Math.round((vote.count * 100) / totalVotes),\n    }));\n\n    return parsedVotes;\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService"
+                    }
+                ],
+                "line": 16,
+                "jsdoctags": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
+            },
+            "accessors": {
+                "parsedVotes": {
+                    "name": "parsedVotes",
+                    "getSignature": {
+                        "name": "parsedVotes",
+                        "type": "",
+                        "returnType": "",
+                        "line": 20
+                    }
+                }
+            }
+        },
+        {
+            "name": "VotingCardComponent",
+            "id": "component-VotingCardComponent-aea1dbdf3be61369c67c4e29de57e1b7",
+            "file": "src/app/votingCard.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "voting-card",
+            "styleUrls": [],
+            "styles": [],
+            "template": "<div class=\"bg-gray-600 max-w-max p-6 flex flex-col rounded\">\n  <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">\n    {{ votingService.title }}\n  </h1>\n\n  <div class=\"flex justify-center\">\n    <booth *ngIf=\"state === 'open'\" (vote)=\"handleVote($event)\"></booth>\n    <result *ngIf=\"state === 'closed'\"></result>\n  </div>\n</div>\n",
+            "templateUrl": [],
+            "viewProviders": [],
+            "inputsClass": [
+                {
+                    "name": "state",
+                    "defaultValue": "'open'",
+                    "line": 23,
+                    "type": "VotingStates"
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [
+                {
+                    "name": "votingService",
+                    "type": "VotingService",
+                    "optional": false,
+                    "description": "",
+                    "line": 25,
+                    "modifierKind": [
+                        114
+                    ]
+                }
+            ],
+            "methodsClass": [
+                {
+                    "name": "handleVote",
+                    "args": [
+                        {
+                            "name": "option",
+                            "type": "string"
+                        }
+                    ],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 27,
+                    "jsdoctags": [
+                        {
+                            "name": "option",
+                            "type": "string",
+                            "tagName": {
+                                "text": "param"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "hostBindings": [],
+            "hostListeners": [],
+            "description": "",
+            "rawdescription": "",
+            "type": "component",
+            "sourceCode": "import { Component, Input } from '@angular/core';\n\nimport { VotingService } from './voting.service';\n\ntype VotingStates = 'open' | 'closed';\n\n@Component({\n  selector: 'voting-card',\n  template: `\n    <div class=\"bg-gray-600 max-w-max p-6 flex flex-col rounded\">\n      <h1 class=\"font-bold text-2xl mb-4 text-gray-100\">\n        {{ votingService.title }}\n      </h1>\n\n      <div class=\"flex justify-center\">\n        <booth *ngIf=\"state === 'open'\" (vote)=\"handleVote($event)\"></booth>\n        <result *ngIf=\"state === 'closed'\"></result>\n      </div>\n    </div>\n  `,\n})\nexport class VotingCardComponent {\n  @Input() state: VotingStates = 'open';\n\n  constructor(public votingService: VotingService) {}\n\n  handleVote(option: string) {\n    this.state = 'closed';\n    this.votingService.incrementCountOn(option);\n  }\n}\n",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "constructorObj": {
+                "name": "constructor",
+                "description": "",
+                "args": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService"
+                    }
+                ],
+                "line": 23,
+                "jsdoctags": [
+                    {
+                        "name": "votingService",
+                        "type": "VotingService",
+                        "tagName": {
+                            "text": "param"
+                        }
+                    }
+                ]
             }
         }
     ],
@@ -255,6 +545,9 @@
                         },
                         {
                             "name": "BoothComponent"
+                        },
+                        {
+                            "name": "FormComponent"
                         },
                         {
                             "name": "ResultComponent"
@@ -325,7 +618,23 @@
                 "name": "FirstExample",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
+                "file": "src/stories/App.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "FirstExample",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
                 "file": "src/stories/Booth.stories.ts",
+                "type": "",
+                "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "FirstExample",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/Form.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
             },
@@ -353,28 +662,20 @@
                 "type": "literal type"
             },
             {
-                "name": "SecondExample",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Booth.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
-                "name": "SecondVote",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
-                "file": "src/stories/Result.stories.ts",
-                "type": "",
-                "defaultValue": "Template.bind({})"
-            },
-            {
                 "name": "SecondVoting",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
                 "file": "src/stories/VotingCard.stories.ts",
                 "type": "",
                 "defaultValue": "Template.bind({})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/App.stories.ts",
+                "type": "Story<AppComponent>",
+                "defaultValue": "(args: AppComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [\n      ResultComponent,\n      BoothComponent,\n      VotingCardComponent,\n      FormComponent,\n    ],\n    imports: [FormsModule],\n  },\n})"
             },
             {
                 "name": "Template",
@@ -388,9 +689,9 @@
                 "name": "Template",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/stories/VotingCard.stories.ts",
-                "type": "Story<VotingCardComponent>",
-                "defaultValue": "(args: VotingCardComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [BoothComponent, ResultComponent],\n  },\n})"
+                "file": "src/stories/Form.stories.ts",
+                "type": "Story<FormComponent>",
+                "defaultValue": "(args: FormComponent) => ({\n  props: args,\n  moduleMetadata: {\n    imports: [FormsModule],\n  },\n})"
             },
             {
                 "name": "Template",
@@ -399,16 +700,42 @@
                 "file": "src/stories/Result.stories.ts",
                 "type": "Story<ResultComponent>",
                 "defaultValue": "(args: ResultComponent) => ({\n  props: {\n    ...args,\n    className: 'text-gray-900',\n  },\n})"
+            },
+            {
+                "name": "Template",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/stories/VotingCard.stories.ts",
+                "type": "Story<VotingCardComponent>",
+                "defaultValue": "(args: VotingCardComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [BoothComponent, ResultComponent],\n  },\n})"
             }
         ],
         "functions": [],
         "typealiases": [
+            {
+                "name": "OptionError",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/form.component.ts",
+                "description": "",
+                "kind": 165
+            },
             {
                 "name": "Vote",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
                 "rawtype": "literal type",
                 "file": "src/types/Vote.ts",
+                "description": "",
+                "kind": 165
+            },
+            {
+                "name": "VotingDataPayload",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "literal type",
+                "file": "src/app/voting.service.ts",
                 "description": "",
                 "kind": 165
             },
@@ -471,17 +798,27 @@
                     "defaultValue": "{\n  production: false\n}"
                 }
             ],
-            "src/stories/Booth.stories.ts": [
+            "src/stories/App.stories.ts": [
                 {
                     "name": "FirstExample",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Booth.stories.ts",
+                    "file": "src/stories/App.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "SecondExample",
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/App.stories.ts",
+                    "type": "Story<AppComponent>",
+                    "defaultValue": "(args: AppComponent) => ({\n  props: args,\n  moduleMetadata: {\n    declarations: [\n      ResultComponent,\n      BoothComponent,\n      VotingCardComponent,\n      FormComponent,\n    ],\n    imports: [FormsModule],\n  },\n})"
+                }
+            ],
+            "src/stories/Booth.stories.ts": [
+                {
+                    "name": "FirstExample",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/stories/Booth.stories.ts",
@@ -497,17 +834,27 @@
                     "defaultValue": "(args: BoothComponent) => ({\n  props: args,\n})"
                 }
             ],
-            "src/stories/Result.stories.ts": [
+            "src/stories/Form.stories.ts": [
                 {
-                    "name": "FirstVote",
+                    "name": "FirstExample",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/stories/Result.stories.ts",
+                    "file": "src/stories/Form.stories.ts",
                     "type": "",
                     "defaultValue": "Template.bind({})"
                 },
                 {
-                    "name": "SecondVote",
+                    "name": "Template",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "src/stories/Form.stories.ts",
+                    "type": "Story<FormComponent>",
+                    "defaultValue": "(args: FormComponent) => ({\n  props: args,\n  moduleMetadata: {\n    imports: [FormsModule],\n  },\n})"
+                }
+            ],
+            "src/stories/Result.stories.ts": [
+                {
+                    "name": "FirstVote",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
                     "file": "src/stories/Result.stories.ts",
@@ -553,6 +900,17 @@
         "groupedFunctions": {},
         "groupedEnumerations": {},
         "groupedTypeAliases": {
+            "src/app/form.component.ts": [
+                {
+                    "name": "OptionError",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/form.component.ts",
+                    "description": "",
+                    "kind": 165
+                }
+            ],
             "src/types/Vote.ts": [
                 {
                     "name": "Vote",
@@ -560,6 +918,17 @@
                     "subtype": "typealias",
                     "rawtype": "literal type",
                     "file": "src/types/Vote.ts",
+                    "description": "",
+                    "kind": 165
+                }
+            ],
+            "src/app/voting.service.ts": [
+                {
+                    "name": "VotingDataPayload",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "literal type",
+                    "file": "src/app/voting.service.ts",
                     "description": "",
                     "kind": 165
                 }
@@ -588,7 +957,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/2",
+                "coverageCount": "0/3",
                 "status": "low"
             },
             {
@@ -601,6 +970,15 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/form.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "FormComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/10",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/result.component.ts",
                 "type": "component",
                 "linktype": "component",
@@ -610,12 +988,21 @@
                 "status": "low"
             },
             {
+                "filePath": "src/app/voting.service.ts",
+                "type": "injectable",
+                "linktype": "injectable",
+                "name": "VotingService",
+                "coveragePercent": 0,
+                "coverageCount": "0/6",
+                "status": "low"
+            },
+            {
                 "filePath": "src/app/votingCard.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "VotingCardComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/6",
+                "coverageCount": "0/5",
                 "status": "low"
             },
             {
@@ -639,7 +1026,7 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Booth.stories.ts",
+                "filePath": "src/stories/App.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -649,11 +1036,21 @@
                 "status": "low"
             },
             {
+                "filePath": "src/stories/App.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
                 "filePath": "src/stories/Booth.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "SecondExample",
+                "name": "FirstExample",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -669,11 +1066,21 @@
                 "status": "low"
             },
             {
-                "filePath": "src/stories/Result.stories.ts",
+                "filePath": "src/stories/Form.stories.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "FirstVote",
+                "name": "FirstExample",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/stories/Form.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Template",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
@@ -683,7 +1090,7 @@
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
-                "name": "SecondVote",
+                "name": "FirstVote",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
