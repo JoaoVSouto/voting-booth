@@ -1,17 +1,17 @@
 import Center from './decorators/Center.svelte';
 
-import Booth from '../Booth.svelte';
+import Form from '../Form.svelte';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/Form',
+  component: Form,
   decorators: [() => Center],
 };
 
 const Template = ({ ...args }) => ({
-  Component: Booth,
+  Component: Form,
   props: args,
 });
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Formulário';

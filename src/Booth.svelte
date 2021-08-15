@@ -1,6 +1,17 @@
 <script>
-  export let options;
+  import { onDestroy } from 'svelte';
+
+  import { voting } from './store/voting';
+
   export let onVote;
+
+  let options;
+
+  const unsubscribe = voting.subscribe(value => {
+    options = value.votes.map(vote => vote.option);
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
 {#each options as option, index}

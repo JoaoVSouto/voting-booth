@@ -1,20 +1,16 @@
 <script>
   import './main.css';
 
-  import VotingCard from './VotingCard.svelte';
+  import { voting } from './store/voting';
 
-  let votes = [
-    {
-      option: 'Sim',
-      count: 8,
-    },
-    {
-      option: 'Não',
-      count: 12,
-    },
-  ];
+  import VotingCard from './VotingCard.svelte';
+  import Form from './Form.svelte';
 </script>
 
 <main>
-  <VotingCard title="Segue o relator?" {votes} />
+  {#if $voting.isEditing}
+    <Form />
+  {:else}
+    <VotingCard />
+  {/if}
 </main>

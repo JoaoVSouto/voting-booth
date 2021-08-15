@@ -1,17 +1,17 @@
 import Center from './decorators/Center.svelte';
 
-import Booth from '../Booth.svelte';
+import App from '../App.svelte';
 
 export default {
-  title: 'Voting/Booth',
-  component: Booth,
+  title: 'Voting/App',
+  component: App,
   decorators: [() => Center],
 };
 
 const Template = ({ ...args }) => ({
-  Component: Booth,
+  Component: App,
   props: args,
 });
 
 export const FirstExample = Template.bind({});
-FirstExample.storyName = 'Sim/Não';
+FirstExample.storyName = 'Fluxo completo';
